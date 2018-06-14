@@ -22,6 +22,10 @@ PRODUCT_PACKAGES := \
     SettingsIntelligence \
     tv_input.default
 
+ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
+PRODUCT_PACKAGES += Traceur
+endif
+
 PRODUCT_COPY_FILES := \
     device/google/atv/permissions/tv_core_hardware.xml:system/etc/permissions/tv_core_hardware.xml
 
@@ -116,16 +120,6 @@ endif
 # To enable access to /dev/dvb*
 BOARD_SEPOLICY_DIRS += device/google/atv/sepolicy
 
-# This property defines the tutorial content for this device
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.tutorials_content.android=android8
-
-# Content for ATV Tutorials / Post-Setup Tour
-PRODUCT_COPY_FILES += \
-    device/google/atv/tutorial-library-google.zip.etag:system/media/tutorial-library-google.zip.etag
-
-PRODUCT_COPY_FILES += \
-    device/google/atv/tutorial-library-google.zip:system/media/tutorial-library-google.zip
 
 # Copy .kl file for generic voice remotes
 PRODUCT_COPY_FILES += \
