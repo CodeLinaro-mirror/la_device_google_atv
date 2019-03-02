@@ -43,7 +43,6 @@ PRODUCT_PACKAGES += \
     CalendarProvider \
     CaptivePortalLogin \
     CertInstaller \
-    DocumentsUIMinimal \
     ExternalStorageProvider \
     FusedLocation \
     InputDevices \
@@ -66,6 +65,21 @@ PRODUCT_PACKAGES += \
     clatd.conf \
     local_time.default \
     screenrecord
+
+# PRODUCT_SUPPORTS_CAMERA: Whether the product supports cameras at all
+# (built-in or external USB camera). When 'false', we drop cameraserver, which
+# saves ~3 MiB of RAM. When 'true', additional settings are required for
+# external webcams to work, see "External USB Cameras" documentation.
+#
+# Defaults to true to mimic legacy behaviour.
+PRODUCT_SUPPORTS_CAMERA ?= true
+ifeq ($(PRODUCT_SUPPORTS_CAMERA),true)
+    PRODUCT_PACKAGES += cameraserver
+else
+    # When cameraserver is not included, we need to configure Camera API to not
+    # connect to it.
+    PRODUCT_PROPERTY_OVERRIDES += config.disable_cameraservice=true
+endif
 
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libeffects/data/audio_effects.conf:system/etc/audio_effects.conf
