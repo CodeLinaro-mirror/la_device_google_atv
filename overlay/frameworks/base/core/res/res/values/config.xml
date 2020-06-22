@@ -37,6 +37,10 @@
          Any other values will have surprising consequences. -->
     <integer name="config_defaultUiModeType">4</integer>
 
+    <!--  Control whether to lock UI mode to what is selected from config_defaultUiModeType.
+          Once UI mode is locked, applications cannot change it anymore. -->
+    <bool name="config_lockUiMode">true</bool>
+
     <!-- default device has recents property -->
     <bool name="config_hasRecents">false</bool>
 
@@ -79,4 +83,11 @@
 
     <!-- Enable assistant to show in front of the dream/screensaver. -->
     <bool name="config_assistantOnTopOfDream">true</bool>
+
+    <!-- Maximum size, specified in pixels, to restrain the display space width to. Height and
+         density will be scaled accordingly to maintain aspect ratio. A value of 0 indicates no
+         constraint will be enforced.
+         We limit the UI graphics width to 1920 because higher resolution is unnecessary and causes
+         too much overhead on the GPU for Android TV devices. -->
+    <integer name="config_maxUiWidth">1920</integer>
 </resources>
