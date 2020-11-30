@@ -91,9 +91,6 @@ ifneq ($(PRODUCT_IS_ATV_SDK),true)
     PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
 endif
 
-DEVICE_PACKAGE_OVERLAYS += \
-    device/google/atv/overlay
-
 # Enable frame-exact AV sync
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.media.avsync=true
@@ -107,7 +104,3 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libeffects/data/audio_effects.conf:system/etc/audio_effects.conf
-
-# Copy CEC master configuration file
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/cec_config.xml:system/etc/cec_config.xml
