@@ -25,7 +25,7 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 #
 # All components inherited here go to system image
 #
-$(call inherit-product, device/google/atv/products/atv_mainline_system.mk)
+$(call inherit-product, device/google/atv/products/atv_generic_system.mk)
 
 # Enable mainline checking for excat this product name
 ifeq (aosp_tv_arm,$(TARGET_PRODUCT))
@@ -38,7 +38,6 @@ endif
 $(call inherit-product, device/google/atv/products/atv_system_ext.mk)
 # Packages required for ATV GSI
 PRODUCT_PACKAGES += \
-    FrameworkPackageStubs \
     TvProvision
 
 #
@@ -47,7 +46,7 @@ PRODUCT_PACKAGES += \
 $(call inherit-product, device/google/atv/products/atv_product.mk)
 # Packages required for ATV GSI
 PRODUCT_PACKAGES += \
-    LatinIMEGoogleTvPrebuilt \
+    LeanbackIME \
     TvSampleLeanbackLauncher
 
 #
