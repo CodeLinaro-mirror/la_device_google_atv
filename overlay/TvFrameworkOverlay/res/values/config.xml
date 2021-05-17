@@ -29,6 +29,9 @@
     <!-- This device does not allow sms service. -->
     <bool name="config_sms_capable">false</bool>
 
+    <!-- This device does not support mobile data. -->
+    <bool name="config_mobile_data_capable">false</bool>
+
     <!-- Control the default UI mode type to use when there is no other type override
          happening.  One of the following values (See Configuration.java):
              1  UI_MODE_TYPE_NORMAL
@@ -40,6 +43,14 @@
     <!--  Control whether to lock UI mode to what is selected from config_defaultUiModeType.
           Once UI mode is locked, applications cannot change it anymore. -->
     <bool name="config_lockUiMode">true</bool>
+
+    <!-- Control the default night mode to use when there is no other mode override set.
+         One of the following values (see UiModeManager.java):
+             0 - MODE_NIGHT_AUTO
+             1 - MODE_NIGHT_NO
+             2 - MODE_NIGHT_YES
+    -->
+    <integer name="config_defaultNightMode">2</integer>
 
     <!-- default device has recents property -->
     <bool name="config_hasRecents">false</bool>
