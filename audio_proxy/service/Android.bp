@@ -27,6 +27,7 @@ cc_library_static {
   host_supported: true,
   srcs: [
     "RingBufferUtil.cpp",
+    "ServiceConfig.cpp",
   ],
   shared_libs: [
     "libbase",
@@ -70,9 +71,6 @@ cc_defaults {
   ],
 
   cflags: [
-    // TODO(209037093): The flag is not used in prod anymore. Remove after removing the unused files.
-    "-DAUDIO_PROXY_MINOR_VERSION=1",
-
     "-include ../common/AudioProxyVersionMacro.h",
     "-Werror",
     "-Wthread-safety",
@@ -165,15 +163,15 @@ cc_binary {
 
   vintf_fragments: [ "manifest_audio_proxy_7_1.xml" ],
 
-  // TODO(197547824): Upgrade to 7.1
   shared_libs: [
+    "android.hardware.audio@7.1",
     "android.hardware.audio@7.0",
     "android.hardware.audio.common@7.0",
   ],
 
   cflags: [
     "-DMAJOR_VERSION=7",
-    "-DMINOR_VERSION=0",
+    "-DMINOR_VERSION=1",
   ],
 }
 
@@ -183,9 +181,16 @@ cc_test {
 
   srcs: [
     "RingBufferUtilTest.cpp",
+    "ServiceConfigTest.cpp",
   ],
   static_libs: [
     "audio_proxy_service_util",
+    "libbase",
     "libgtest",
+  ],
+
+  cflags: [
+    // Suppress the warning to make ServiceConfigTest easier.
+    "-Wno-writable-strings",
   ],
 }

@@ -44,13 +44,24 @@ class WriteThread;
 
 typedef void (*EventFlagDeleter)(EventFlag*);
 
+#if MAJOR_VERSION == 7 && MINOR_VERSION == 1
+class StreamOutImpl : public android::hardware::audio::V7_1::IStreamOut {
+#else
 class StreamOutImpl : public IStreamOut {
+#endif
  public:
   using CommandMQ = MessageQueue<WriteCommand, kSynchronizedReadWrite>;
   using DataMQ = MessageQueue<uint8_t, kSynchronizedReadWrite>;
   using StatusMQ = MessageQueue<WriteStatus, kSynchronizedReadWrite>;
 
-  StreamOutImpl(std::shared_ptr<BusOutputStream> stream, uint32_t bufferSizeMs,
+#if MAJOR_VERSION >= 7
+  using StreamOutConfig = AudioConfigBase;
+#else
+  using StreamOutConfig = AudioConfig;
+#endif
+
+  StreamOutImpl(std::shared_ptr<BusOutputStream> stream,
+                const StreamOutConfig& config, uint32_t bufferSizeMs,
                 uint32_t latencyMs);
   ~StreamOutImpl() override;
 
@@ -143,16 +154,22 @@ class StreamOutImpl : public IStreamOut {
       const PlaybackRate& playbackRate) override;
 #endif
 
+#if MAJOR_VERSION == 7 && MINOR_VERSION == 1
+  Return<Result> setLatencyMode(
+      android::hardware::audio::V7_1::LatencyMode mode) override;
+  Return<void> getRecommendedLatencyModes(
+      getRecommendedLatencyModes_cb _hidl_cb) override;
+  Return<Result> setLatencyModeCallback(
+      const sp<android::hardware::audio::V7_1::IStreamOutLatencyModeCallback>&
+          cb) override;
+#endif
+
  private:
   uint64_t estimateTotalPlayedFrames() const;
 
   // The object is always valid until close is called.
   std::shared_ptr<BusOutputStream> mStream;
-#if MAJOR_VERSION >= 7
-  const AudioConfigBase mConfig;
-#else
-  const AudioConfig mConfig;
-#endif
+  const StreamOutConfig mConfig;
 
   const uint32_t mBufferSizeMs;
   const uint32_t mLatencyMs;

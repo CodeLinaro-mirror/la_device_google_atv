@@ -54,11 +54,15 @@ using ::android::hardware::audio::common::CPP_VERSION::AudioOutputFlag;
 #endif
 
 class BusStreamProvider;
+struct ServiceConfig;
 
+#if MAJOR_VERSION == 7 && MINOR_VERSION == 1
+class DeviceImpl : public android::hardware::audio::V7_1::IDevice {
+#else
 class DeviceImpl : public IDevice {
+#endif
  public:
-  DeviceImpl(BusStreamProvider& busStreamProvider, uint32_t bufferSizeMs,
-             uint32_t latencyMs);
+  DeviceImpl(BusStreamProvider& busStreamProvider, const ServiceConfig& config);
 
   // Methods from ::android::hardware::audio::V5_0::IDevice follow.
   Return<Result> initCheck() override;
@@ -127,10 +131,30 @@ class DeviceImpl : public IDevice {
                                     uint64_t effectId) override;
 #endif
 
+#if MAJOR_VERSION == 7 && MINOR_VERSION == 1
+  Return<void> openOutputStream_7_1(int32_t ioHandle,
+                                    const DeviceAddress& device,
+                                    const AudioConfig& config,
+                                    const hidl_vec<AudioInOutFlag>& flags,
+                                    const SourceMetadata& sourceMetadata,
+                                    openOutputStream_7_1_cb _hidl_cb) override;
+  Return<Result> setConnectedState_7_1(const AudioPort& devicePort,
+                                       bool connected) override;
+#endif
+
  private:
+#if MAJOR_VERSION >= 7
+  template<typename CallbackType>
+  Return<void> openOutputStreamImpl(int32_t ioHandle,
+                                    const DeviceAddress& device,
+                                    const AudioConfig& config,
+                                    const hidl_vec<AudioInOutFlag>& flags,
+                                    const SourceMetadata& sourceMetadata,
+                                    CallbackType _hidl_cb);
+#endif
+
   BusStreamProvider& mBusStreamProvider;
-  const uint32_t mBufferSizeMs;
-  const uint32_t mLatencyMs;
+  const ServiceConfig& mServiceConfig;
   std::set<AudioPatchHandle> mAudioPatchHandles;
 };
 
