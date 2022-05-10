@@ -33,9 +33,16 @@ PRODUCT_IS_ATV := true
 PRODUCT_PACKAGES += \
     TvProvider
 
-# Media tuner jni
-PRODUCT_PACKAGES += \
-    libmedia_tv_tuner
+# PRODUCT_SUPPORTS_TUNER: Whether the product hardware tuner. When 'false',
+# we drop mediatuner, which saves ~4 MiB of RAM. When 'true', the tuner HAL
+# should be implemented in vendor partition and android.hardware.tv.tuner
+# permission should be installed.
+#
+# Defaults to true to mimic legacy behaviour.
+PRODUCT_SUPPORTS_TUNER ?= true
+ifeq ($(PRODUCT_SUPPORTS_TUNER),true)
+    PRODUCT_PACKAGES += libmedia_tv_tuner
+endif
 
 # From build/target/product/core.mk
 PRODUCT_PACKAGES += \
@@ -44,8 +51,6 @@ PRODUCT_PACKAGES += \
     CalendarProvider \
     CaptivePortalLogin \
     CertInstaller \
-    clatd \
-    clatd.conf \
     ExternalStorageProvider \
     FusedLocation \
     InputDevices \
@@ -60,9 +65,10 @@ PRODUCT_PACKAGES += \
     VpnDialogs \
     com.android.media.tv.remoteprovider
 
-# Traceur for debug only
-PRODUCT_PACKAGES_DEBUG += \
-    Traceur
+# Device owner provisioning for devices defining device_admin
+PRODUCT_PACKAGES += \
+    ManagedProvisioning
+
 
 # PRODUCT_SUPPORTS_CAMERA: Whether the product supports cameras at all
 # (built-in or external USB camera). When 'false', we drop cameraserver, which
@@ -92,12 +98,13 @@ ifneq ($(PRODUCT_IS_ATV_SDK),true)
     PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
 endif
 
-DEVICE_PACKAGE_OVERLAYS += \
-    device/google/atv/overlay
-
 # Enable frame-exact AV sync
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.media.avsync=true
+
+# Update Display.getDeviceProductInfo() on hotplug
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.surface_flinger.update_device_product_info_on_hotplug_reconnect=1
 
 # Copy .kl file for generic voice remotes
 PRODUCT_COPY_FILES += \
