@@ -136,4 +136,14 @@
 
     <!-- ComponentName of the default dream (Settings.Secure.DEFAULT_SCREENSAVER_COMPONENT) -->
     <string name="config_dreamsDefaultComponent" translatable="false">com.android.dreams.basic/com.android.dreams.basic.Colors</string>
+
+    <!-- If true, Views will declare they prefer to be kept clear from overlays when focused. -->
+    <bool name="config_preferKeepClearForFocus">true</bool>
+
+    <!-- Determines whether SafetyCenter feature is enabled.
+         SafetyCenter is not yet supported on TV. -->
+    <bool name="config_enableSafetyCenter">false</bool>
+
+    <!-- The name of the package that will hold the system contacts role. -->
+    <string name="config_systemContacts" translatable="false">com.android.tv.frameworkpackagestubs</string>
 </resources>
