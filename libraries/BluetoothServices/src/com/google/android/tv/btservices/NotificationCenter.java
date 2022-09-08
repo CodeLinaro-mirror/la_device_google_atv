@@ -128,7 +128,7 @@ public class NotificationCenter {
     }
 
     private void ensureNotificationChannel(String channelId,
-            int importance, CharSequence name, String description) {
+            @NotificationManager.Importance int importance, CharSequence name, String description) {
         if (mNotificationManager.getNotificationChannel(channelId) != null) {
             return;
         }
