@@ -29,4 +29,8 @@ interface IOutputStream {
   void setVolume(float left, float right);
   long getBufferSizeBytes();
   int getLatencyMs();
+  void start();
+  void stop();
+  device.google.atv.audio_proxy.MmapBufferInfo createMmapBuffer(int minSizeFrames);
+  device.google.atv.audio_proxy.PresentationPosition getMmapPosition();
 }
