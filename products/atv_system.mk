@@ -64,10 +64,6 @@ PRODUCT_PACKAGES += \
     VpnDialogs \
     com.android.media.tv.remoteprovider
 
-# Use TV PackageInstaller
-PRODUCT_PACKAGES += \
-    PackageInstaller_tv
-
 # Device owner provisioning for devices defining device_admin
 PRODUCT_PACKAGES += \
     ManagedProvisioning
