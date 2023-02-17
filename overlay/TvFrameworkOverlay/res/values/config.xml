@@ -195,4 +195,10 @@
     <!-- Determines whether SafetyCenter feature is enabled.
          SafetyCenter is not yet supported on TV. -->
     <bool name="config_enableSafetyCenter">false</bool>
+
+    <!-- Flag indicating whether seamless refresh rate switching is supported by a device. -->
+    <bool name="config_supportsSeamlessRefreshRateSwitching">false</bool>
+
+    <!-- If a location should be pre-fetched when going into device idle. -->
+    <bool name="config_autoPowerModePrefetchLocation">false</bool>
 </resources>
