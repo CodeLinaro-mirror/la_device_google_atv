@@ -24,6 +24,9 @@ EMULATOR_VENDOR_NO_SENSORS := true
 
 $(call inherit-product, device/google/atv/products/atv_vendor.mk)
 
+# Sets HDMI CEC as Playback Device.
+PRODUCT_PROPERTY_OVERRIDES += ro.hdmi.device_type=4
+
 # need this for gles libraries to load properly
 # after moving to /vendor/lib/
 PRODUCT_PACKAGES += \
@@ -50,6 +53,9 @@ PRODUCT_COPY_FILES += \
 # All default supported features are defined via device/google/atv/permissions/tv_core_hardware.xml.
 PRODUCT_COPY_FILES += \
     device/google/atv/permissions/tv_sdk_excluded_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/tv_sdk_excluded_core_hardware.xml
+
+# goldfish vendor partition configurations
+$(call inherit-product-if-exists, device/generic/goldfish/64bitonly/product/vendor.mk)
 
 #watchdog tiggers reboot because location service is not
 #responding, disble it for now.
