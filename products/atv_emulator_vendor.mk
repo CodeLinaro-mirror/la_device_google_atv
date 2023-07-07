@@ -24,6 +24,9 @@ EMULATOR_VENDOR_NO_SENSORS := true
 
 $(call inherit-product, device/google/atv/products/atv_vendor.mk)
 
+# Sets HDMI CEC as Playback Device.
+PRODUCT_PROPERTY_OVERRIDES += ro.hdmi.device_type=4
+
 # need this for gles libraries to load properly
 # after moving to /vendor/lib/
 PRODUCT_PACKAGES += \
@@ -43,7 +46,8 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     device/generic/goldfish/data/etc/apns-conf.xml:$(TARGET_COPY_OUT_VENDOR)/etc/apns-conf.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_c2_tv.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_tv.xml \
+    device/generic/goldfish/camera/media/media_codecs_google_tv.xml:${TARGET_COPY_OUT_VENDOR}/etc/media_codecs_google_tv.xml \
+    frameworks/native/data/etc/android.hardware.ethernet.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ethernet.xml \
     hardware/libhardware_legacy/audio/audio_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy.conf
 
 # Exclude all non-default hardware features on ATV SDK.
