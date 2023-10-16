@@ -40,7 +40,7 @@ PRODUCT_PACKAGES += \
 # System libraries commonly depended on by things on the system_ext or product partitions.
 # These lists will be pruned periodically.
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0 \
+    android.hardware.wifi \
     libaudio-resampler \
     libaudiohal \
     libdrm \
@@ -60,10 +60,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES_DEBUG += \
     avbctl \
     bootctl \
-    tinyplay \
     tinycap \
+    tinyhostless \
     tinymix \
     tinypcminfo \
+    tinyplay \
     update_engine_client
 
 PRODUCT_HOST_PACKAGES += \
@@ -104,5 +105,9 @@ _my_whitelist := $(_base_mk_whitelist)
 _my_paths := \
   $(TARGET_COPY_OUT_ROOT)/ \
   $(TARGET_COPY_OUT_SYSTEM)/ \
+
+# TODO(b/299166571) Remove this after the artifact path requirements checker picks up
+# hwservicemanager correctly.
+PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += $(TARGET_COPY_OUT_SYSTEM)/bin/hwservicemanager
 
 $(call require-artifacts-in-path, $(_my_paths), $(_my_whitelist))
