@@ -14,9 +14,14 @@
 # limitations under the License.
 #
 PRODUCT_IS_ATV_SDK := true
-PRODUCT_IS_ATV_ARM64_SDK := true
+
+$(call inherit-product, device/google/atv/products/aosp_tv_arm64.mk)
+
+# keep this apk for sdk targets for now
+PRODUCT_PACKAGES += \
+    EmulatorSmokeTests
 
 # Overrides
 PRODUCT_BRAND := Android
-PRODUCT_NAME := sdk_atv_arm64
-PRODUCT_DEVICE := generic_arm64
+PRODUCT_NAME := sdk_atv64_arm64
+PRODUCT_DEVICE := emulator64_arm64
