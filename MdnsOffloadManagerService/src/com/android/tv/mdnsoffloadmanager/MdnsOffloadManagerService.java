@@ -44,6 +44,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
 
+import com.android.tv.mdnsoffloadmanager.util.WakeLockWrapper;
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -75,6 +77,7 @@ public class MdnsOffloadManagerService extends Service {
     private OffloadWriter mOffloadWriter;
     private ConnectivityManager mConnectivityManager;
     private PackageManager mPackageManager;
+    private WakeLockWrapper mWakeLock;
 
     public MdnsOffloadManagerService() {
         this(new Injector());
@@ -119,6 +122,12 @@ public class MdnsOffloadManagerService extends Service {
             return mContext.getSystemService(PowerManager.class).getLowPowerStandbyPolicy();
         }
 
+        WakeLockWrapper newWakeLock() {
+            return new WakeLockWrapper(
+                    mContext.getSystemService(PowerManager.class)
+                            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG));
+        }
+
         PackageManager getPackageManager() {
             return mContext.getPackageManager();
         }
@@ -149,6 +158,7 @@ public class MdnsOffloadManagerService extends Service {
         mOffloadWriter = new OffloadWriter();
         mConnectivityManager = mInjector.getConnectivityManager();
         mPackageManager = mInjector.getPackageManager();
+        mWakeLock = mInjector.newWakeLock();
         bindVendorService();
         setupScreenBroadcastReceiver();
         setupConnectivityListener();
@@ -247,7 +257,8 @@ public class MdnsOffloadManagerService extends Service {
         boolean success = false;
         try {
             success = doneSignal.await(AWAIT_DUMP_SECONDS, TimeUnit.SECONDS);
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) {
+        }
         if (!success) {
             Log.e(TAG, "Failed to dump state on handler thread");
         }
@@ -264,8 +275,8 @@ public class MdnsOffloadManagerService extends Service {
     private final IMdnsOffloadManager.Stub mOffloadManagerBinder = new IMdnsOffloadManager.Stub() {
         @Override
         public int addProtocolResponses(@NonNull String networkInterface,
-                                        @NonNull OffloadServiceInfo serviceOffloadData,
-                                        @NonNull IBinder clientToken) {
+                @NonNull OffloadServiceInfo serviceOffloadData,
+                @NonNull IBinder clientToken) {
             Objects.requireNonNull(networkInterface);
             Objects.requireNonNull(serviceOffloadData);
             Objects.requireNonNull(clientToken);
@@ -402,7 +413,12 @@ public class MdnsOffloadManagerService extends Service {
                     mOffloadWriter.setOffloadState(false);
                     mOffloadWriter.retrieveAndClearMetrics(mOffloadIntentStore.getRecordKeys());
                 } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-                    mOffloadWriter.setOffloadState(true);
+                    try {
+                        mWakeLock.acquire(5000);
+                        mOffloadWriter.setOffloadState(true);
+                    } finally {
+                        mWakeLock.release();
+                    }
                 }
             });
         }
@@ -419,22 +435,46 @@ public class MdnsOffloadManagerService extends Service {
     }
 
     private class ConnectivityManagerNetworkCallback extends ConnectivityManager.NetworkCallback {
+        private final Map<Network, LinkProperties> mLinkProperties = new HashMap<>();
+
         @Override
-        public void onAvailable(@NonNull Network network) {
-            LinkProperties linkProperties = mConnectivityManager.getLinkProperties(network);
-            String iface = linkProperties.getInterfaceName();
+        public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
+            // We only want to know the interface name of a network. This method is
+            // called right after onAvailable() or any other important change during the lifecycle
+            // of the network.
             mHandler.post(() -> {
-                InterfaceOffloadManager offloadManager = getInterfaceOffloadManager(iface);
+                LinkProperties previousProperties = mLinkProperties.put(network, linkProperties);
+                if (previousProperties != null &&
+                        !previousProperties.getInterfaceName().equals(
+                                linkProperties.getInterfaceName())) {
+                    // This means that the interface changed names, which may happen
+                    // but very rarely.
+                    InterfaceOffloadManager offloadManager =
+                            getInterfaceOffloadManager(previousProperties.getInterfaceName());
+                    offloadManager.onNetworkLost();
+                }
+
+                // We trigger an onNetworkAvailable even if the existing is the same in case
+                // anything needs to be refreshed due to the LinkProperties change.
+                InterfaceOffloadManager offloadManager =
+                        getInterfaceOffloadManager(linkProperties.getInterfaceName());
                 offloadManager.onNetworkAvailable();
             });
         }
 
         @Override
         public void onLost(@NonNull Network network) {
-            LinkProperties linkProperties = mConnectivityManager.getLinkProperties(network);
-            String iface = linkProperties.getInterfaceName();
             mHandler.post(() -> {
-                InterfaceOffloadManager offloadManager = getInterfaceOffloadManager(iface);
+                // Network object is guaranteed to match a network object from a previous
+                // onLinkPropertiesChanged() so the LinkProperties must be available to retrieve
+                // the associated iface.
+                LinkProperties previousProperties = mLinkProperties.remove(network);
+                if (previousProperties == null){
+                    Log.w(TAG,"Network "+ network + " lost before being available.");
+                    return;
+                }
+                InterfaceOffloadManager offloadManager =
+                        getInterfaceOffloadManager(previousProperties.getInterfaceName());
                 offloadManager.onNetworkLost();
             });
         }
