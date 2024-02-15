@@ -17,6 +17,7 @@
 package com.google.android.tv.btservices;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothProfile;
@@ -25,6 +26,7 @@ import android.util.Log;
 
 import com.android.settingslib.bluetooth.CachedBluetoothDevice;
 import com.android.settingslib.bluetooth.LocalBluetoothManager;
+import com.android.settingslib.bluetooth.LocalBluetoothProfile;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -257,6 +259,20 @@ public class BluetoothUtils {
         }
     }
 
+    public static BluetoothAdapter getDefaultBluetoothAdapter() {
+        final FutureTask<BluetoothAdapter> defaultBluetoothAdapterFutureTask =
+                new FutureTask<>(
+                        // Avoid StrictMode ThreadPolicy violation
+                        BluetoothAdapter::getDefaultAdapter);
+        try {
+            defaultBluetoothAdapterFutureTask.run();
+            return defaultBluetoothAdapterFutureTask.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.w(TAG, "Error getting default BluetoothAdapter.", e);
+            return null;
+        }
+    }
+
     public static CachedBluetoothDevice getCachedBluetoothDevice(
             Context context, BluetoothDevice device) {
         LocalBluetoothManager localBluetoothManager = getLocalBluetoothManager(context);
@@ -264,5 +280,49 @@ public class BluetoothUtils {
             return localBluetoothManager.getCachedDeviceManager().findDevice(device);
         }
         return null;
+    }
+
+    /** Returns true if the BluetoothDevice is the active audio output, false otherwise. */
+    public static boolean isActiveAudioOutput(BluetoothDevice device) {
+        if (device != null) {
+            final BluetoothAdapter btAdapter = getDefaultBluetoothAdapter();
+            if (btAdapter != null) {
+                return btAdapter.getActiveDevices(BluetoothProfile.A2DP).contains(device);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Sets the specified BluetoothDevice as the active audio output. Passing `null`
+     * resets the active audio output to the default. Returns false on immediate error,
+     * true otherwise.
+     */
+    public static boolean setActiveAudioOutput(BluetoothDevice device) {
+        // null is an accepted value for unsetting the active audio output
+        final BluetoothAdapter btAdapter = getDefaultBluetoothAdapter();
+        if (btAdapter != null) {
+            if (device == null) {
+                return btAdapter.removeActiveDevice(BluetoothAdapter.ACTIVE_DEVICE_AUDIO);
+            } else {
+                return btAdapter.setActiveDevice(device, BluetoothAdapter.ACTIVE_DEVICE_AUDIO);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the CachedBluetoothDevice supports an audio profile (A2DP for now),
+     * false otherwise.
+     */
+    public static boolean hasAudioProfile(CachedBluetoothDevice cachedDevice) {
+      if (cachedDevice != null) {
+          for (LocalBluetoothProfile profile : cachedDevice.getProfiles()) {
+              if (profile.getProfileId() == BluetoothProfile.A2DP) {
+                  return true;
+              }
+          }
+      }
+      return false;
     }
 }
