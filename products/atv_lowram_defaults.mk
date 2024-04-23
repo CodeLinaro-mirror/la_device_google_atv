@@ -50,3 +50,9 @@ TARGET_VNDK_USE_CORE_VARIANT := true
 ifneq (,$(filter eng, $(TARGET_BUILD_VARIANT)))
   MALLOC_SVELTE := true
 endif
+
+# Overlay for lowram
+PRODUCT_PACKAGES += TvLowRamOverlay
+
+# Disable camera
+PRODUCT_SUPPORTS_CAMERA := false
