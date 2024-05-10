@@ -20,8 +20,10 @@ android_library {
         "TwoPanelSettingsLib",
     ],
 
-    min_sdk_version: "32",
     resource_dirs: ["res"],
     manifest: "AndroidManifest.xml",
     sdk_version: "system_current",
+    lint: {
+        baseline_filename: "lint-baseline.xml",
+    },
 }

@@ -29,6 +29,11 @@ PRODUCT_PACKAGES += \
     update_engine \
     update_verifier \
 
+ifeq ($(PRODUCT_REQUIRES_PAI_STUB),true)
+PRODUCT_PACKAGES += \
+	AtomPlayAutoInstallStub
+endif
+
 # Wrapped net utils for /vendor access.
 PRODUCT_PACKAGES += netutils-wrapper-1.0
 
@@ -40,7 +45,7 @@ PRODUCT_PACKAGES += \
 # System libraries commonly depended on by things on the system_ext or product partitions.
 # These lists will be pruned periodically.
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0 \
+    android.hardware.wifi \
     libaudio-resampler \
     libaudiohal \
     libdrm \
@@ -60,10 +65,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES_DEBUG += \
     avbctl \
     bootctl \
-    tinyplay \
     tinycap \
+    tinyhostless \
     tinymix \
     tinypcminfo \
+    tinyplay \
     update_engine_client
 
 PRODUCT_HOST_PACKAGES += \
@@ -75,10 +81,10 @@ PRODUCT_PACKAGES += \
     libpolicy-subsystem
 
 # Include all zygote init scripts. "ro.zygote" will select one of them.
-PRODUCT_COPY_FILES += \
-    system/core/rootdir/init.zygote32.rc:system/etc/init/hw/init.zygote32.rc \
-    system/core/rootdir/init.zygote64.rc:system/etc/init/hw/init.zygote64.rc \
-    system/core/rootdir/init.zygote64_32.rc:system/etc/init/hw/init.zygote64_32.rc
+PRODUCT_PACKAGES += \
+    init.zygote32.rc \
+    init.zygote64.rc \
+    init.zygote64_32.rc
 
 # Enable dynamic partition size
 PRODUCT_USE_DYNAMIC_PARTITION_SIZE := true
