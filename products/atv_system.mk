@@ -78,9 +78,8 @@ PRODUCT_PACKAGES += \
 # saves ~3 MiB of RAM. When 'true', additional settings are required for
 # external webcams to work, see "External USB Cameras" documentation.
 #
-# Defaults to true to mimic legacy behaviour.
-PRODUCT_SUPPORTS_CAMERA ?= true
-ifeq ($(PRODUCT_SUPPORTS_CAMERA),true)
+# Aussme 'true' if no one sets 'false'.
+ifneq ($(PRODUCT_SUPPORTS_CAMERA),false)
     PRODUCT_PACKAGES += cameraserver
     PRODUCT_PACKAGES += CameraExtensionsProxy
 else
@@ -117,5 +116,4 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/google/atv/permissions/tv_core_hardware.xml:system/etc/permissions/tv_core_hardware.xml
 
-PRODUCT_COPY_FILES += \
-    frameworks/av/media/libeffects/data/audio_effects.xml:system/etc/audio_effects.xml
+PRODUCT_PACKAGES += framework-audio_effects.xml

@@ -17,6 +17,7 @@
 package com.google.android.tv.btservices;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothProfile;
@@ -25,6 +26,7 @@ import android.util.Log;
 
 import com.android.settingslib.bluetooth.CachedBluetoothDevice;
 import com.android.settingslib.bluetooth.LocalBluetoothManager;
+import com.android.settingslib.bluetooth.LocalBluetoothProfile;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,6 +39,8 @@ public class BluetoothUtils {
     private static final String TAG = "Atv.BluetoothUtils";
 
     private static List<String> sKnownRemoteLabels = null;
+    private static List<String> sOfficialRemoteLabels = null;
+    private static List<String> sBtDeviceServiceUpdatableRemoteLabels = null;
     private static final int MINOR_MASK = 0b11111100;
 
     private static final int MINOR_DEVICE_CLASS_POINTING = 0b10000000;
@@ -58,7 +62,7 @@ public class BluetoothUtils {
             && (minor & ~MINOR_REMOTE_MASK) == 0;
     }
 
-    private static void setKnownRemoteLabels(Context context) {
+    private static void setRemoteLabels(Context context) {
         if (context == null) {
             return;
         }
@@ -71,6 +75,12 @@ public class BluetoothUtils {
                         context.getResources().getStringArray(
                             R.array.known_remote_labels)));
         }
+
+        sOfficialRemoteLabels = Collections.unmodifiableList(Arrays.asList(
+                context.getResources().getStringArray(R.array.official_bt_device_labels)));
+
+        sBtDeviceServiceUpdatableRemoteLabels = Collections.unmodifiableList(Arrays.asList(
+                context.getResources().getStringArray(R.array.bt_device_service_updatable_labels)));
     }
 
     public static boolean isConnected(BluetoothDevice device) {
@@ -103,7 +113,7 @@ public class BluetoothUtils {
 
     public static boolean isRemote(Context context, BluetoothDevice device) {
         if (sKnownRemoteLabels == null) {
-            setKnownRemoteLabels(context);
+            setRemoteLabels(context);
         }
         if (device == null) {
             return false;
@@ -150,8 +160,8 @@ public class BluetoothUtils {
     }
 
     /**
-     * Match a device's metadata against a predefined list to determine whether the device is an
-     * official device to be used with the host device.
+     * If a device's metadata (manufacturer, model) or name matches against a predefined list,
+     * treat it as an official device to be used with the host device.
      */
     public static boolean isOfficialDevice(Context context, BluetoothDevice device) {
         boolean isManufacturerOfficial =
@@ -166,11 +176,61 @@ public class BluetoothUtils {
                         device,
                         BluetoothDevice.METADATA_MODEL_NAME,
                         R.array.official_bt_device_model_names);
-        return isManufacturerOfficial && isModelOfficial;
+
+        if (isManufacturerOfficial && isModelOfficial) {
+            return true;
+        }
+
+        if (sOfficialRemoteLabels == null) {
+            setRemoteLabels(context);
+        }
+
+        if (device == null || device.getName() == null) {
+            return false;
+        }
+
+        if (sOfficialRemoteLabels == null) {
+            return false;
+        }
+
+        final String name = device.getName().toLowerCase();
+        for (String knownLabel : sOfficialRemoteLabels) {
+            if (name.contains(knownLabel)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean isOfficialRemote(Context context, BluetoothDevice device) {
         return isRemote(context, device) && isOfficialDevice(context, device);
+    }
+
+    public static boolean isBtDeviceServiceUpdableRemote(Context context, BluetoothDevice device) {
+        if (sBtDeviceServiceUpdatableRemoteLabels == null) {
+            setRemoteLabels(context);
+        }
+
+        if (device == null || device.getName() == null) {
+            return false;
+        }
+
+        if (sBtDeviceServiceUpdatableRemoteLabels == null) {
+            return false;
+        }
+
+        final String name = device.getName().toLowerCase();
+        for (String knownLabel : sBtDeviceServiceUpdatableRemoteLabels) {
+            if (name.contains(knownLabel)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public static boolean supportBtDeviceServiceUpdate(Context context, BluetoothDevice device) {
+        return isRemote(context, device) && isBtDeviceServiceUpdableRemote(context, device);
     }
 
     public static int getIcon(Context context, BluetoothDevice device) {
@@ -257,6 +317,20 @@ public class BluetoothUtils {
         }
     }
 
+    public static BluetoothAdapter getDefaultBluetoothAdapter() {
+        final FutureTask<BluetoothAdapter> defaultBluetoothAdapterFutureTask =
+                new FutureTask<>(
+                        // Avoid StrictMode ThreadPolicy violation
+                        BluetoothAdapter::getDefaultAdapter);
+        try {
+            defaultBluetoothAdapterFutureTask.run();
+            return defaultBluetoothAdapterFutureTask.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.w(TAG, "Error getting default BluetoothAdapter.", e);
+            return null;
+        }
+    }
+
     public static CachedBluetoothDevice getCachedBluetoothDevice(
             Context context, BluetoothDevice device) {
         LocalBluetoothManager localBluetoothManager = getLocalBluetoothManager(context);
@@ -264,5 +338,49 @@ public class BluetoothUtils {
             return localBluetoothManager.getCachedDeviceManager().findDevice(device);
         }
         return null;
+    }
+
+    /** Returns true if the BluetoothDevice is the active audio output, false otherwise. */
+    public static boolean isActiveAudioOutput(BluetoothDevice device) {
+        if (device != null) {
+            final BluetoothAdapter btAdapter = getDefaultBluetoothAdapter();
+            if (btAdapter != null) {
+                return btAdapter.getActiveDevices(BluetoothProfile.A2DP).contains(device);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Sets the specified BluetoothDevice as the active audio output. Passing `null`
+     * resets the active audio output to the default. Returns false on immediate error,
+     * true otherwise.
+     */
+    public static boolean setActiveAudioOutput(BluetoothDevice device) {
+        // null is an accepted value for unsetting the active audio output
+        final BluetoothAdapter btAdapter = getDefaultBluetoothAdapter();
+        if (btAdapter != null) {
+            if (device == null) {
+                return btAdapter.removeActiveDevice(BluetoothAdapter.ACTIVE_DEVICE_AUDIO);
+            } else {
+                return btAdapter.setActiveDevice(device, BluetoothAdapter.ACTIVE_DEVICE_AUDIO);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the CachedBluetoothDevice supports an audio profile (A2DP for now),
+     * false otherwise.
+     */
+    public static boolean hasAudioProfile(CachedBluetoothDevice cachedDevice) {
+      if (cachedDevice != null) {
+          for (LocalBluetoothProfile profile : cachedDevice.getProfiles()) {
+              if (profile.getProfileId() == BluetoothProfile.A2DP) {
+                  return true;
+              }
+          }
+      }
+      return false;
     }
 }
