@@ -19,7 +19,8 @@
     hardware without waking up the CPU.
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.tv.mdnsoffloadmanager">
+    package="com.android.tv.mdnsoffloadmanager"
+    android:sharedUserId="android.uid.system">
     <permission
         android:name="com.android.tv.mdnsoffloadmanager.MDNS_OFFLOAD_SERVICE"
         android:protectionLevel="signature" />
@@ -30,7 +31,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.NETWORK_SETTINGS"/>
+    <uses-permission android:name="android.permission.REGISTER_NSD_OFFLOAD_ENGINE"/>
 
     <application
         android:label="MdnsOffloadManager"
