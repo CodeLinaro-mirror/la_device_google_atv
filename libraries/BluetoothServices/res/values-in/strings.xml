@@ -24,7 +24,7 @@
     <string name="settings_bt_confirm_update" msgid="7490528407190318108">"Konfirmasi update remote"</string>
     <string name="settings_bt_update_summary" msgid="137113561617823800">"Selama proses update, koneksi remote Anda mungkin terputus sebentar."</string>
     <string name="settings_continue" msgid="5640776697820481568">"Lanjutkan"</string>
-    <string name="settings_cancel" msgid="1284029950430684039">"Batalkan"</string>
+    <string name="settings_cancel" msgid="1284029950430684039">"Batal"</string>
     <string name="settings_bt_update" msgid="8210371540974244481">"Update remote"</string>
     <string name="settings_bt_update_software_available" msgid="7002004529854458452">"Software baru tersedia"</string>
     <string name="settings_bt_update_available" msgid="414405852666517260">"Ada update"</string>
@@ -68,7 +68,7 @@
     <string name="settings_find_my_remote_title" msgid="618883575610472525">"Temukan remote saya"</string>
     <string name="settings_find_my_remote_description" msgid="2434088262598422577">"Memutar suara untuk menemukan lokasi remote Google TV jika Anda lupa tempat menaruhnya"</string>
     <string name="find_my_remote_slice_description" msgid="4802810369433859327">"Tekan tombol di bagian belakang Google TV Streamer untuk memutar suara di remote selama 30 detik. Tindakan ini hanya berfungsi pada Remote Suara Google TV Streamer.\n\nUntuk berhenti memutar suara, tekan tombol apa saja di remote."</string>
-    <string name="find_my_remote_integration_hint" msgid="3962827321568773142">"Jika Temukan remote saya diaktifkan, Anda dapat memutar suara untuk menemukan lokasi remote Google TV jika Anda lupa tempat menaruhnya."</string>
+    <string name="find_my_remote_integration_hint" msgid="7131212049012673631">"Saat aktif, Anda dapat menggunakan tombol ini di perangkat untuk memainkan suara guna menemukan lokasi remote Anda. Saat nonaktif, tombol ini tidak akan berfungsi. Anda masih tetap dapat menggunakan Temukan remote saya melalui metode lainnya."</string>
     <string name="find_my_remote_play_sound" msgid="1799877650759138251">"Putar suara"</string>
     <string name="settings_remote_battery_level" msgid="1817513765913707505">"Tingkat daya baterai: %1$s"</string>
     <string name="settings_known_devices_category" msgid="2307810690946536753">"Aksesori"</string>
@@ -76,16 +76,16 @@
     <string name="settings_devices_connected" msgid="3256213134907921013">"Terhubung"</string>
     <string name="settings_devices_paired" msgid="4460141776955368574">"Perangkat yang terhubung sebelumnya"</string>
     <string name="settings_pair_remote" msgid="7566753084479902759">"Sambungkan remote atau aksesori"</string>
-    <string name="bluetooth_disconnect" msgid="1385608885917484057">"Putuskan koneksi"</string>
+    <string name="bluetooth_disconnect" msgid="1385608885917484057">"Berhenti hubungkan"</string>
     <string name="bluetooth_connect" msgid="6283971929092004620">"Hubungkan"</string>
     <string name="bluetooth_rename" msgid="4433577238394058486">"Ganti nama"</string>
     <string name="bluetooth_forget" msgid="4933552074497360964">"Lupakan"</string>
     <string name="bluetooth_toggle_active_audio_output" msgid="494557568422711885">"Gunakan untuk audio TV"</string>
     <string name="bluetooth_connected_status" msgid="8391804274846835227">"Terhubung"</string>
-    <string name="bluetooth_disconnected_status" msgid="972515438988962457">"Terputus"</string>
+    <string name="bluetooth_disconnected_status" msgid="972515438988962457">"Tidak terhubung"</string>
     <string name="settings_devices_control" msgid="1862490057009510077">"Kontrol perangkat"</string>
     <string name="settings_bt_pair_title" msgid="1205942796805671508">"Hubungkan perangkat baru"</string>
-    <string name="pair_device_description" msgid="5145574754576245361">"Sebelum menghubungkan perangkat Bluetooth baru, pastikan perangkat dalam mode penyambungan. Untuk menghubungkan %1$s, tekan dan tahan %2$s + %3$s selama 3 detik."</string>
+    <string name="pair_device_description" msgid="5145574754576245361">"Sebelum menyambungkan perangkat Bluetooth baru, pastikan perangkat dalam mode penyambungan. Untuk menyambungkan %1$s, tekan %2$s + %3$s selama 3 detik."</string>
     <string name="pair_device_device_name" msgid="4004194247588260613">"Remote Android TV"</string>
     <string name="settings_bt_available_devices" msgid="6237789711837183219">"Perangkat yang tersedia"</string>
     <string name="settings_bt_empty_text" msgid="6228875847390369960">"Mencari perangkat…"</string>
@@ -96,4 +96,7 @@
     <string name="settings_bt_pair_toast_fail" msgid="8025560978364284117">"%1$s gagal dihubungkan"</string>
     <string name="settings_bt_pair_toast_connected" msgid="3073130641004809067">"%1$s terhubung"</string>
     <string name="settings_bt_pair_toast_disconnected" msgid="2046165143924352053">"%1$s terputus"</string>
+    <string name="settings_backlight_title" msgid="2013564937830315646">"Mode Lampu Latar"</string>
+    <string name="settings_backlight_description" msgid="2672529254045062504">"Cahaya tombol di remote control saat setiap kali ditekan."</string>
+    <string name="backlight_slice_description" msgid="2417058213200444743">"Menekan tombol di remote akan mengaktifkan lampu latar di remote Google TV yang didukung."</string>
 </resources>
