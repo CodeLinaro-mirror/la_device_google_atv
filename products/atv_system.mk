@@ -15,6 +15,10 @@
 #
 # This makefile contains the system partition contents for
 # a generic TV device.
+
+# Release Configuration map
+PRODUCT_RELEASE_CONFIG_MAPS += $(wildcard vendor/google_shared/tv/release/release_config_map.textproto)
+
 $(call inherit-product, $(SRC_TARGET_DIR)/product/media_system.mk)
 
 $(call inherit-product-if-exists, frameworks/base/data/fonts/fonts.mk)
@@ -118,4 +122,4 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += framework-audio_effects.xml
 
-$(call soong_config_set,system_services,without_vibrator,true)
+$(call soong_config_set,system_services,without_hal,vibrator)
