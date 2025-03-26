@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Ieplānots"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"Fona apgaismojums nekad netiks aktivizēts katram klikšķim."</item>
-    <item msgid="2183471491302242879">"Fona apgaismojums tiks aktivizēts katram klikšķim. Katrā aktivizēšanas reizē izgaismojums ilgs 5 sekundes."</item>
-    <item msgid="4339318499911916123">"Fona apgaismojums tiks aktivizēts katram klikšķim tikai vakarā un naktī (~18:00–6:00). Katrā aktivizēšanas reizē izgaismojums ilgs 5 sekundes."</item>
+    <item msgid="5834948533097349983">"Fona apgaismojums nekad netiks aktivizēts katram nospiešanas gadījumam."</item>
+    <item msgid="2571249757867129366">"Fona apgaismojums tiks aktivizēts katram nospiešanas gadījumam. Katrā aktivizēšanas reizē izgaismojums ilgs 5 sekundes."</item>
+    <item msgid="6724077490859797929">"Fona apgaismojums tiks aktivizēts katram nospiešanas gadījumam tikai vakarā un naktī (~18:00–6:00). Katrā aktivizēšanas reizē izgaismojums ilgs 5 sekundes."</item>
   </string-array>
 </resources>

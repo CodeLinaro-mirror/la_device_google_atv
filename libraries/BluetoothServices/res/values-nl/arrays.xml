@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Gepland"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"De achtergrondverlichting gaat nooit aan bij elke druk."</item>
-    <item msgid="2183471491302242879">"De achtergrondverlichting gaat aan bij elke druk. De verlichting gaat elke keer 5 seconden aan."</item>
-    <item msgid="4339318499911916123">"De achtergrondverlichting gaat alleen aan bij elke druk gedurende de nacht (18:00 - 06:00 uur). De verlichting gaat elke keer 5 seconden aan."</item>
+    <item msgid="5834948533097349983">"De achtergrondverlichting gaat nooit aan als op de knop wordt gedrukt."</item>
+    <item msgid="2571249757867129366">"De achtergrondverlichting gaat elke keer aan als op de knop wordt gedrukt. De verlichting gaat telkens 5 seconden aan."</item>
+    <item msgid="6724077490859797929">"De achtergrondverlichting gaat alleen elke keer aan als op de knop wordt gedrukt in de avond en nacht (18:00 - 06:00 uur). De verlichting gaat telkens 5 seconden aan."</item>
   </string-array>
 </resources>

@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Ajastatud"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"Taustavalgustus ei sütti kunagi iga klikiga."</item>
-    <item msgid="2183471491302242879">"Taustavalgustus süttib iga klikiga. Valgustus on sees viis sekundit iga kord, kui see aktiveeritakse."</item>
-    <item msgid="4339318499911916123">"Taustavalgustus süttib iga klikiga ainult öisel ajal (umbes 18.00–6.00). Valgustus on sees viis sekundit iga kord, kui see aktiveeritakse."</item>
+    <item msgid="5834948533097349983">"Taustavalgustus ei sütti iga vajutusega."</item>
+    <item msgid="2571249757867129366">"Taustavalgustus süttib iga vajutusega. Valgustus süttib iga kord 5 sekundiks."</item>
+    <item msgid="6724077490859797929">"Taustavalgustus süttib iga vajutusega ainult öisel ajal (umbes 18.00–6.00). Valgustus süttib iga kord 5 sekundiks."</item>
   </string-array>
 </resources>
