@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Planlaşdırılıb"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"Hər klikdə arxa işıq yanmayacaq."</item>
-    <item msgid="2183471491302242879">"Hər klikdə arxa işıq yanacaq. İşıqlandırma hər dəfə aktivləşdirildikdə 5 saniyə davam edəcək."</item>
-    <item msgid="4339318499911916123">"Arxa işıq yalnız gecə saatlarında (18:00 ~ 06:00) hər klikdə yanacaq. İşıqlandırma hər dəfə aktivləşdirildikdə 5 saniyə davam edəcək."</item>
+    <item msgid="5834948533097349983">"Arxa işıq hər basma əməliyyatında yanmayacaq."</item>
+    <item msgid="2571249757867129366">"Arxa işıq hər basma əməliyyatında yanacaq. İşıqlandırma hər dəfə aktivləşdirildikdə 5 saniyə davam edəcək."</item>
+    <item msgid="6724077490859797929">"Arxa işıq yalnız gecə saatlarında (18:00~06:00) hər basma əməliyyatında yanacaq. İşıqlandırma hər dəfə aktivləşdirildikdə 5 saniyə davam edəcək."</item>
   </string-array>
 </resources>

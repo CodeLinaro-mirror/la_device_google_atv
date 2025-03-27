@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Tímasett"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"Aldrei mun kvikna á baklýsingu með hverjum smelli."</item>
-    <item msgid="2183471491302242879">"Kvikna mun á baklýsingu með hverjum smelli. Lýsingin mun vara í fimm sekúndur í hvert sinn sem kviknar á henni."</item>
-    <item msgid="4339318499911916123">"Aðeins mun kvikna á baklýsingu með hverjum smelli á kvöldin og nóttunni (18:00–06:00). Lýsingin mun vara í fimm sekúndur í hvert sinn sem kviknar á henni."</item>
+    <item msgid="5834948533097349983">"Baklýsing mun ekki kvikna í hvert skipti sem ýtt er."</item>
+    <item msgid="2571249757867129366">"Baklýsing mun kvikna í hvert skipti sem ýtt er. Lýsingin mun vara í fimm sekúndur í hvert sinn sem kviknar á henni."</item>
+    <item msgid="6724077490859797929">"Aðeins mun kvikna á baklýsingu í hvert sinn sem ýtt er á kvöldin og nóttunni (18:00–06:00). Lýsingin mun vara í fimm sekúndur í hvert sinn sem kviknar á henni."</item>
   </string-array>
 </resources>

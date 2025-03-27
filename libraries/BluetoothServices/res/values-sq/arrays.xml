@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"I planifikuar"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"Drita e sfondit nuk do të ndriçojë me çdo klikim."</item>
-    <item msgid="2183471491302242879">"Drita e sfondit do të ndriçojë me çdo klikim. Ndriçimi do të zgjasë për 5 sekonda sa herë që të aktivizohet."</item>
-    <item msgid="4339318499911916123">"Drita e sfondit do të ndriçojë me çdo klikim vetëm gjatë orarit të natës (18:00~6:00). Ndriçimi do të zgjasë për 5 sekonda sa herë që të aktivizohet."</item>
+    <item msgid="5834948533097349983">"Drita e sfondit nuk do të ndriçojë asnjëherë me çdo shtypje."</item>
+    <item msgid="2571249757867129366">"Drita e sfondit do të ndriçojë me çdo shtypje. Ndriçimi do të zgjasë për 5 sekonda sa herë që të aktivizohet."</item>
+    <item msgid="6724077490859797929">"Drita e sfondit do të ndriçojë me çdo shtypje vetëm gjatë orarit të natës (18:00~6:00). Ndriçimi do të zgjasë për 5 sekonda sa herë që të aktivizohet."</item>
   </string-array>
 </resources>
