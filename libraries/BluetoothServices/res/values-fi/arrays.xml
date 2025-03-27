@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Ajoitettu"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"Taustavalo ei koskaan valaise joka klikkauksella."</item>
-    <item msgid="2183471491302242879">"Taustavalo valaisee joka klikkauksella. Valaisu kestää 5 sekunnin ajan aina, kun se aktivoituu."</item>
-    <item msgid="4339318499911916123">"Taustavalo valaisee joka klikkauksella ainoastaan yöaikaan (noin klo. 18–6). Valaisu kestää 5 sekunnin ajan aina, kun se aktivoituu."</item>
+    <item msgid="5834948533097349983">"Taustavalo ei koskaan valaise jokaisella painalluksella."</item>
+    <item msgid="2571249757867129366">"Taustavalo valaisee joka painalluksella. Valaisu kestää 5 sekunnin ajan aina, kun se aktivoituu."</item>
+    <item msgid="6724077490859797929">"Taustavalo valaisee joka painalluksella ainoastaan yöaikaan (noin klo. 18–6). Valaisu kestää 5 sekunnin ajan aina, kun se aktivoituu."</item>
   </string-array>
 </resources>

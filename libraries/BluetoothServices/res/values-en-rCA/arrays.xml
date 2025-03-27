@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Scheduled"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"The backlight will never illuminate with each click."</item>
-    <item msgid="2183471491302242879">"The backlight will illuminate with each click. The illumination will last for 5 seconds each time it is activated."</item>
-    <item msgid="4339318499911916123">"The backlight will illuminate with each click only during nighttime hours(6pm~6am). The illumination will last for 5 seconds each time it is activated."</item>
+    <item msgid="5834948533097349983">"The backlight will never illuminate with each press."</item>
+    <item msgid="2571249757867129366">"The backlight will illuminate with each press. The illumination will last for 5 seconds each time it is activated."</item>
+    <item msgid="6724077490859797929">"The backlight will illuminate with each press only during nighttime hours (6pm~6am). The illumination will last for 5 seconds each time it is activated."</item>
   </string-array>
 </resources>
