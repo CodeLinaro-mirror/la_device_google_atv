@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Planlandı"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"Arka ışık hiçbir zaman düğmeye her basıldığında yanmaz."</item>
-    <item msgid="2183471491302242879">"Arka ışık düğmeye her basıldığında yanar. Işık, her etkinleştirildiğinde 5 saniye boyunca yanar."</item>
-    <item msgid="4339318499911916123">"Arka ışık yalnızca gece saatlerinde (18:00-06:00) düğmeye her basıldığında yanar. Işık, her etkinleştirildiğinde 5 saniye boyunca yanar."</item>
+    <item msgid="5834948533097349983">"Arka ışık düğmeye her basıldığında yanmaz."</item>
+    <item msgid="2571249757867129366">"Arka ışık düğmeye her basıldığında yanar. Işık, her etkinleştirildiğinde 5 saniye boyunca yanar."</item>
+    <item msgid="6724077490859797929">"Arka ışık yalnızca gece saatlerinde (18:00-06:00) düğmeye her basıldığında yanar. Işık, her etkinleştirildiğinde 5 saniye boyunca yanar."</item>
   </string-array>
 </resources>

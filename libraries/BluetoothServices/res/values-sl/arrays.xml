@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Načrtovano"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"Osvetlitev ozadja ne zasveti z vsakim klikom."</item>
-    <item msgid="2183471491302242879">"Osvetlitev ozadja zasveti z vsakim klikom. Osvetlitev traja 5 sekund vsakič, ko je aktivirana."</item>
-    <item msgid="4339318499911916123">"Osvetlitev ozadja zasveti z vsakim klikom samo v večernem in nočnem času (od 18.00 do približno 6.00). Osvetlitev traja 5 sekund vsakič, ko je aktivirana."</item>
+    <item msgid="5834948533097349983">"Osvetlitev ozadja nikoli ne zasveti z vsakim pritiskom."</item>
+    <item msgid="2571249757867129366">"Osvetlitev ozadja zasveti z vsakim pritiskom. Osvetlitev traja 5 sekund vsakič, ko je aktivirana."</item>
+    <item msgid="6724077490859797929">"Osvetlitev ozadja zasveti z vsakim pritiskom samo v večernem in nočnem času (od 18.00 do približno 6.00). Osvetlitev traja 5 sekund vsakič, ko je aktivirana."</item>
   </string-array>
 </resources>

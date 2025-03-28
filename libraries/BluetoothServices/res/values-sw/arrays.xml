@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Umeratibiwa"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"Mwangaza wa skrini hautaangaza kila unapobofya."</item>
-    <item msgid="2183471491302242879">"Mwangaza wa skrini utaangaza kila unapobofya. Mwangaza utawaka kwa sekunde 5 kila wakati unapowashwa."</item>
-    <item msgid="4339318499911916123">"Mwangaza wa skrini utaangaza kila unapobofya saa za usiku pekee (saa 12 jioni hadi 12 asubuhi). Mwangaza utawaka kwa sekunde 5 kila wakati unapowashwa."</item>
+    <item msgid="5834948533097349983">"Mwangaza wa skrini hautawaka kila mara utakapobonyeza."</item>
+    <item msgid="2571249757867129366">"Mwangaza wa skrini utawaka kila mara utakapobonyeza. Mwangaza utawaka kwa sekunde 5 kila mara utakapowashwa."</item>
+    <item msgid="6724077490859797929">"Mwangaza wa skrini utawaka kila mara utakapobonyeza usiku pekee (saa 12 jioni hadi 12 asubuhi). Mwangaza utawaka kwa sekunde 5 kila mara utakapowashwa."</item>
   </string-array>
 </resources>

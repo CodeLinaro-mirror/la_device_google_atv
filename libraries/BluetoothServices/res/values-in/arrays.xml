@@ -22,8 +22,8 @@
     <item msgid="1608651425322487768">"Terjadwal"</item>
   </string-array>
   <string-array name="backlight_hints">
-    <item msgid="9076173600287388436">"Lampu latar tidak akan menyala setiap kali mengklik."</item>
-    <item msgid="2183471491302242879">"Lampu latar akan menyala setiap kali mengklik. Cahaya akan bertahan selama 5 detik setiap kali diaktifkan."</item>
-    <item msgid="4339318499911916123">"Lampu latar tidak akan menyala setiap kali mengklik, hanya saat malam hari (18.00 - 06.00) Cahaya akan bertahan selama 5 detik setiap kali diaktifkan."</item>
+    <item msgid="5834948533097349983">"Lampu latar tidak akan pernah menyala setiap kali tombol ditekan."</item>
+    <item msgid="2571249757867129366">"Lampu latar akan menyala setiap kali tombol ditekan. Cahaya lampu latar akan bertahan selama 5 detik setiap kali diaktifkan."</item>
+    <item msgid="6724077490859797929">"Lampu latar akan menyala setiap kali tombol ditekan hanya saat malam hari (18.00–06.00). Cahaya lampu latar akan bertahan selama 5 detik setiap kali diaktifkan."</item>
   </string-array>
 </resources>
