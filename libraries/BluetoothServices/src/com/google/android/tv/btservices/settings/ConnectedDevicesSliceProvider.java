@@ -64,6 +64,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -127,6 +128,7 @@ public class ConnectedDevicesSliceProvider extends SliceProvider implements
     static final String KEY_BACKLIGHT_RADIO_GROUP = "backlight_radio_group";
     static final String KEY_TOGGLE_ACTIVE_AUDIO_OUTPUT = "toggle_active_audio_output";
 
+    private static final String KEY_EXTERNAL_SPEAKER = "external_speaker";
 
     private static final String SCHEME_CONTENT = "content://";
     private final Handler mHandler = new Handler(Looper.getMainLooper());
@@ -334,6 +336,7 @@ public class ConnectedDevicesSliceProvider extends SliceProvider implements
         //       of inactiveAccessories and bondedAccessories.
         Set<String> activeOfficialRemotes = new HashSet<>();
         Set<String> inactiveOfficialRemotes = new HashSet<>();
+        boolean hasActiveDevices = false;
 
         // Bucketing all BT devices
         for (BluetoothDevice device : getBluetoothDevices()) {
@@ -374,7 +377,11 @@ public class ConnectedDevicesSliceProvider extends SliceProvider implements
             createAndAddBtDeviceSlicePreferenceFromSet(psb, activeAccessories, addressToDevice);
             createAndAddBtDeviceSlicePreferenceFromSet(psb, inactiveAccessories, addressToDevice);
             createAndAddBtDeviceSlicePreferenceFromSet(psb, bondedAccessories, addressToDevice);
+            hasActiveDevices = true;
         }
+
+        // Add a section for external speakers.
+        updateExternalSpeakerSlice(psb);
 
         // "Official remote" category
         if (activeOfficialRemotes.size() + inactiveOfficialRemotes.size() > 0) {
@@ -384,13 +391,17 @@ public class ConnectedDevicesSliceProvider extends SliceProvider implements
             createAndAddBtDeviceSlicePreferenceFromSet(psb, activeOfficialRemotes, addressToDevice);
             createAndAddBtDeviceSlicePreferenceFromSet(
                     psb, inactiveOfficialRemotes, addressToDevice);
+            hasActiveDevices = true;
         }
 
         // Adding the remote buttons settings at the bottom
         updateAxelSlice(psb);
         updateCustomSlice(psb);
-        updateFindMyRemoteSlice(psb);
-        updateBacklight(psb);
+
+        if (hasActiveDevices) {
+            updateFindMyRemoteSlice(psb);
+            updateBacklight(psb);
+        }
     }
 
     private void updateDeviceControlSlice(PreferenceSliceBuilder psb) {
@@ -404,6 +415,29 @@ public class ConnectedDevicesSliceProvider extends SliceProvider implements
                 .setTitle(getString(R.string.settings_devices_control));
         psb.addPreferenceCategory(category);
         updateCecSettings(psb);
+    }
+
+    private void updateExternalSpeakerSlice(PreferenceSliceBuilder psb) {
+        String uri = getString(R.string.external_speaker_slice_provider_uri);
+        if (TextUtils.isEmpty(uri)) {
+            return;
+        }
+
+        ProviderInfo provider =
+                getContext()
+                        .getPackageManager()
+                        .resolveContentProvider(Uri.parse(uri).getAuthority(), 0);
+        if (provider == null) {
+            return;
+        }
+
+        String category = getString(R.string.external_speaker_category);
+        if (TextUtils.isEmpty(category)) {
+            return;
+        }
+
+        psb.addPreferenceCategory(new RowBuilder().setTitle(category).setKey(KEY_EXTERNAL_SPEAKER));
+        psb.addEmbeddedPreference(new RowBuilder().setTargetSliceUri(uri));
     }
 
     private void updateAxelSlice(PreferenceSliceBuilder psb) {
