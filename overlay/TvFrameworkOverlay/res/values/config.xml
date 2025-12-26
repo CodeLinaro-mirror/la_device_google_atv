@@ -211,6 +211,6 @@
     <!-- Bytes that the PinnerService will pin for Home app. -->
     <integer name="config_pinnerHomePinBytes">0</integer>
 
-    <!-- When true, the {@link Display#FLAG_PRESENTATION} flag is set to internal displays. -->
-    <bool name="config_allowPresentationOnInternalDisplay">false</bool>
+    <!-- Retention policy: number of records to kept for the historical start info per package. -->
+    <integer name="config_app_start_info_history_list_size">1</integer>
 </resources>
