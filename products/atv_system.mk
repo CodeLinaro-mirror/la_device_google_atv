@@ -61,7 +61,6 @@ PRODUCT_PACKAGES += \
     KeyChain \
     librs_jni \
     PacProcessor \
-    PrintSpooler \
     ProxyHandler \
     SharedStorageBackup \
     screenrecord \
@@ -118,6 +117,9 @@ PRODUCT_COPY_FILES += \
     device/google/atv/permissions/tv_core_hardware.xml:system/etc/permissions/tv_core_hardware.xml
 
 PRODUCT_PACKAGES += framework-audio_effects.xml
+
+# Allowlist for system packages included in atv_system.mk
+PRODUCT_PACKAGES += preinstalled-packages-atv-system.xml
 
 $(call soong_config_set,system_services,without_hal,vibrator)
 $(call soong_config_set,google_tv,using_tv_gki,true)
